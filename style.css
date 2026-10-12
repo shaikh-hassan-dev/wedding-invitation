@@ -1,0 +1,202 @@
+
+/* =========================================================
+   THEME — change colours here
+   ========================================================= */
+:root{
+  --maroon-900:#0a1230;
+  --maroon-800:#101b45;
+  --maroon-700:#16235a;
+  --maroon-600:#24387f;
+  --rose:#e6c77a;        /* gold, light (Royal Navy & Gold theme) */
+  --rose-deep:#b8954a;   /* gold, deep */
+  --blush:#eef0f8;
+  --cream:#fbfbff;
+  --ink:#101b45;
+  --serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --script:"Great Vibes", "Segoe Script", cursive;
+  --arabic:"Amiri", "Traditional Arabic", serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--serif);
+  color:var(--blush);
+  background:
+    radial-gradient(120% 60% at 50% 0%, var(--maroon-600) 0%, transparent 70%),
+    linear-gradient(180deg, var(--maroon-700), var(--maroon-900));
+  background-attachment:fixed;
+  min-height:100vh;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+main{max-width:480px;margin:0 auto;padding:0 20px 120px}
+button,a.btn{font:inherit}
+
+/* ---------- Opening overlay (gives a tap so music can start) ---------- */
+.gate{display:none}
+.js .gate{
+  display:flex;position:fixed;inset:0;z-index:50;
+  flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  padding:32px;text-align:center;overflow:hidden;
+  transition:visibility 0s 2s;             /* hide only after the curtains have opened */
+}
+.gate.open{visibility:hidden}
+/* Velvet curtains: two halves + a top valance */
+.curtain{
+  position:absolute;top:0;bottom:0;width:51%;z-index:-1;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.25), transparent 30%, rgba(0,0,0,.35)),
+    repeating-linear-gradient(90deg, #101b45 0 10px, #283e88 20px, #1c2c6b 28px, #101b45 36px);
+  transition:transform 1.8s cubic-bezier(.7,0,.3,1);
+}
+.curtain.l{left:0;transform-origin:left;border-right:3px solid var(--rose-deep)}
+.curtain.r{right:0;transform-origin:right;border-left:3px solid var(--rose-deep)}
+.gate.open .curtain.l{transform:translateX(-100%) scaleX(.5)}
+.gate.open .curtain.r{transform:translateX(100%) scaleX(.5)}
+.valance{
+  position:absolute;top:0;left:0;right:0;height:64px;z-index:-1;
+  background:
+    radial-gradient(circle at 50% 0, #283e88 68%, var(--rose-deep) 69% 74%, transparent 75%) 0 24px/40px 40px repeat-x,
+    linear-gradient(#101b45, #24387f) 0 0/100% 26px no-repeat;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.5));
+  transition:transform 1.2s ease .5s;
+}
+.gate.open .valance{transform:translateY(-110%)}
+.gate .seal,.gate .dear,.gate .guest-count,.gate .btn{transition:opacity .5s}
+.gate.open .seal,.gate.open .dear,.gate.open .guest-count,.gate.open .btn{opacity:0}
+.gate .seal{
+  width:110px;height:110px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%, var(--rose), var(--rose-deep) 70%);
+  color:var(--maroon-800);font-family:var(--script);font-size:2rem;
+  box-shadow:0 0 0 6px rgba(230,199,122,.18), 0 12px 40px rgba(0,0,0,.45);
+  animation:pulse 2.6s ease-in-out infinite;
+}
+.gate .dear{font-size:1.35rem;font-style:italic;color:var(--rose)}
+.gate .guest-count{margin-top:-16px}
+
+/* ---------- Generic bits ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--rose);background:transparent;color:var(--blush);
+  font-size:1.05rem;font-weight:600;letter-spacing:.04em;text-decoration:none;
+  transition:background .25s, color .25s, transform .15s;
+}
+.btn:hover,.btn:focus-visible{background:var(--rose);color:var(--maroon-800)}
+.btn:active{transform:scale(.97)}
+.btn.solid{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:var(--maroon-800);border:none}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+
+.divider{display:flex;align-items:center;gap:12px;margin:26px auto;max-width:260px;color:var(--rose)}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--rose),transparent)}
+
+.card{
+  background:linear-gradient(180deg, rgba(251,251,255,.07), rgba(251,251,255,.03));
+  border:1px solid rgba(230,199,122,.35);
+  border-radius:22px;padding:28px 22px;margin-top:22px;text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.label{font-size:.82rem;letter-spacing:.28em;text-transform:uppercase;color:var(--rose)}
+
+/* ---------- Header ---------- */
+header{text-align:center;padding-top:36px}
+.greeting{font-size:1.25rem;font-style:italic;color:var(--rose)}
+.guest-count{font-size:.95rem;letter-spacing:.06em;color:var(--blush);opacity:.9;margin-top:4px}
+.guest-count[hidden]{display:none}
+.bismillah{font-family:var(--arabic);font-size:1.9rem;color:var(--rose);margin:18px 0 8px;direction:rtl}
+.opening{font-size:1.08rem;color:var(--blush);opacity:.92;max-width:340px;margin:0 auto}
+.host{margin-top:18px;font-size:1.15rem;font-weight:600;color:var(--cream)}
+
+/* ---------- Animated scene ---------- */
+.scene{
+  position:relative;margin:26px -6px 0;border-radius:24px;overflow:hidden;
+  aspect-ratio:4/5;border:1px solid rgba(230,199,122,.35);
+  box-shadow:0 18px 50px rgba(0,0,0,.4);
+}
+.scene svg{display:block;width:100%;height:100%}
+.replay{
+  position:absolute;right:12px;bottom:12px;z-index:2;
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--rose);
+  background:rgba(10,18,48,.55);color:var(--rose);cursor:pointer;font-size:1.05rem;
+}
+/* Everything in the scene waits for .play (added when the invitation is opened) */
+.scene *{animation-play-state:paused}
+.scene.play *{animation-play-state:running}
+.lantern{transform-box:fill-box;transform-origin:50% 0;animation:sway 4s ease-in-out infinite}
+.glow{animation:glow 4s ease-in-out infinite}
+/* Couple image (transparent PNG; figures fill x 0–352, y 86–577 of 408×612).
+   Sized/offset so the figures are centred between the columns (x 108–292) with feet on the floor (y 470) of the 400×500 viewBox. */
+.couple{
+  position:absolute;left:30.6%;width:45%;bottom:2.9%;
+  animation:rise 1.5s cubic-bezier(.16,1,.3,1) both, float 4s ease-in-out 1.5s infinite;
+}
+.couple img{display:block;max-width:100%;height:auto}
+.heart{transform-box:fill-box;transform-origin:center;animation:heart 1.4s ease-out 5s both}
+.petal{animation:fall linear infinite}
+
+@keyframes rise{from{transform:translateY(40%);opacity:0}to{transform:none;opacity:1}}
+@keyframes float{50%{transform:translateY(-6px)}}
+@keyframes heart{from{transform:scale(0);opacity:0}60%{transform:scale(1.25);opacity:1}to{transform:scale(1);opacity:1}}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes glow{0%,100%{opacity:.75}50%{opacity:1}}
+@keyframes fall{from{transform:translate(0,-20px) rotate(0)}to{transform:translate(30px,520px) rotate(360deg)}}
+@keyframes pulse{50%{box-shadow:0 0 0 14px rgba(230,199,122,.08), 0 12px 40px rgba(0,0,0,.45)}}
+
+/* ---------- Couple ---------- */
+.names{text-align:center;margin-top:30px}
+.names .n{font-family:var(--script);font-size:clamp(2.3rem,11vw,3.1rem);line-height:1.1;color:var(--cream)}
+.names .amp{font-family:var(--script);font-size:2rem;color:var(--rose);margin:4px 0}
+.names .so{font-size:1rem;font-style:italic;opacity:.85}
+
+/* ---------- Event ---------- */
+.event-title{font-family:var(--script);font-size:2rem;color:var(--cream);line-height:1.2}
+.big{font-size:1.4rem;font-weight:600;color:var(--cream)}
+.hijri{font-style:italic;opacity:.85}
+.venue{font-size:1.15rem;color:var(--cream)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+
+/* ---------- Countdown ---------- */
+.timer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.timer div{background:rgba(10,18,48,.45);border:1px solid rgba(230,199,122,.3);border-radius:14px;padding:12px 0}
+.timer b{display:block;font-size:1.9rem;color:var(--cream);font-variant-numeric:tabular-nums;line-height:1.1}
+.timer span{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose)}
+.after{font-size:1.25rem;font-style:italic;color:var(--cream);margin-top:10px}
+
+/* ---------- Closing ---------- */
+.compliments li{list-style:none;font-size:1.12rem;color:var(--cream)}
+.compliments .all{margin-top:8px;font-style:italic;color:var(--rose)}
+
+/* ---------- Floating music button & toast ---------- */
+.theme{
+  position:fixed;left:16px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:40;
+  padding:9px 16px;font-size:.92rem;background:rgba(10,18,48,.8);backdrop-filter:blur(6px);
+}
+.music{
+  position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;
+  width:52px;height:52px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--rose);background:rgba(10,18,48,.8);color:var(--rose);
+  display:grid;place-items:center;backdrop-filter:blur(6px);
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
+}
+.music[hidden]{display:none}
+.music svg{width:22px;height:22px}
+.music.on svg{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{
+  position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);z-index:60;
+  background:var(--cream);color:var(--maroon-800);padding:10px 18px;border-radius:999px;
+  font-weight:600;opacity:0;pointer-events:none;transition:.3s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Gentle entrance on scroll ---------- */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease, transform .9s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
